@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/extensions
 import Ship from './ship.js';
 
 export default class GameBoard {
@@ -26,20 +27,11 @@ export default class GameBoard {
         const lat = Math.floor(Math.random() * (this.size - 0));
         const lon = Math.floor(Math.random() * (this.size - 0));
 
-        // Validate horizontal room
-        if (ship.length + lon > this.size) {
-          console.log('out of room');
-        } else {
-          for (let index = 0; index < ship.length; index++) {
-            this.board[lat][lon + index] = ship;
-          }
-          shipPlaced = true;
-          break;
-        }
-
         // Validate vertical room
         if (ship.length + lat > this.size) {
           console.log('out of room');
+        } else if (this.validateCollisions(ship.length, lat, lon)) {
+          console.log('you hit another ship');
         } else {
           for (let index = 0; index < ship.length; index++) {
             this.board[lat + index][lon] = ship;
@@ -47,11 +39,38 @@ export default class GameBoard {
           shipPlaced = true;
           break;
         }
+
+        // Validate horizontal room
+        if (ship.length + lon > this.size) {
+          console.log('out of room');
+        } else if (this.validateCollisions(ship.length, lat, lon)) {
+          console.log('you hit another ship');
+        } else {
+          for (let index = 0; index < ship.length; index += 1) {
+            this.board[lat][lon + index] = ship;
+          }
+          shipPlaced = true;
+          break;
+        }
       }
     });
   }
+
+  validateCollisions(shipLength, lat, lon) {
+    for (let index = 0; index < shipLength + 1; index += 1) {
+      try {
+        if ((this.board[lat][lon + index] !== null && this.board[lat + 1][lon + index] !== null)
+         || (this.board[lat + index][lon] !== null && this.board[lat + index][lon + 1] !== null)) {
+          return true;
+        }
+      } catch (error) {
+        console.log('no room');
+      }
+    }
+    return false;
+  }
 }
 
-const game = new GameBoard(5);
+const game = new GameBoard(10);
 game.placeShips();
 console.table(game.board);

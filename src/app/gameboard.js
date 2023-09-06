@@ -51,8 +51,20 @@ export default class GameBoard {
   }
 
   validateVerticalCollisions(shipLength, lat, lon) {
-    for (let index = 0; index < shipLength; index += 1) {
-      if ((this.board[lat + index][lon] !== null)) {
+    let lengthValidation = shipLength;
+    let index = 0;
+    if (shipLength + lat < this.size && lat !== 0) {
+      lengthValidation += 1;
+      index = -1;
+    } else if (shipLength + lat >= this.size) {
+      index -= 1;
+    } else if (lat <= 0) {
+      lengthValidation += 1;
+    }
+    for (index; index < lengthValidation; index += 1) {
+      if ((this.board[lat + index][lon] !== null)
+          || (this.board[lat + index][lon - 1] !== null)
+          || (this.board[lat + index][lon + 1] !== null)) {
         return true;
       }
     }

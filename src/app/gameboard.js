@@ -61,20 +61,63 @@ export default class GameBoard {
     } else if (lat <= 0) {
       lengthValidation += 1;
     }
-    for (index; index < lengthValidation; index += 1) {
-      if ((this.board[lat + index][lon] !== null)
-          || (this.board[lat + index][lon - 1] !== null)
-          || (this.board[lat + index][lon + 1] !== null)) {
-        return true;
+
+    if (lon - 1 < 0) {
+      for (index; index < lengthValidation; index += 1) {
+        if ((this.board[lat + index][lon] !== null)
+            || (this.board[lat + index][lon + 1] !== null)) {
+          return true;
+        }
+      }
+    } else if (lon + 1 >= this.size) {
+      for (index; index < lengthValidation; index += 1) {
+        if ((this.board[lat + index][lon] !== null)
+            || (this.board[lat + index][lon - 1] !== null)) {
+          return true;
+        }
+      }
+    } else {
+      for (index; index < lengthValidation; index += 1) {
+        if ((this.board[lat + index][lon] !== null)
+            || (this.board[lat + index][lon - 1] !== null)
+            || (this.board[lat + index][lon + 1] !== null)) {
+          return true;
+        }
       }
     }
     return false;
   }
 
   validateHorizontalCollisions(shipLength, lat, lon) {
-    for (let index = 0; index < shipLength; index += 1) {
-      if ((this.board[lat][lon + index] !== null)) {
-        return true;
+    let lengthValidation = shipLength + 1;
+    let index = -1;
+    if (lon <= 0) {
+      index = 0;
+    } else if (shipLength + lon >= this.size) {
+      lengthValidation -= 1;
+    }
+
+    if (lat + 1 >= this.size) {
+      for (index; index < lengthValidation; index += 1) {
+        if ((this.board[lat][lon + index] !== null)
+        || (this.board[lat - 1][lon + index] !== null)) {
+          return true;
+        }
+      }
+    } else if (lat - 1 < 0) {
+      for (index; index < lengthValidation; index += 1) {
+        if ((this.board[lat][lon + index] !== null)
+          || (this.board[lat + 1][lon + index] !== null)) {
+          return true;
+        }
+      }
+    } else {
+      for (index; index < lengthValidation; index += 1) {
+        if ((this.board[lat][lon + index] !== null)
+          || (this.board[lat - 1][lon + index] !== null)
+          || (this.board[lat + 1][lon + index] !== null)) {
+          return true;
+        }
       }
     }
     return false;

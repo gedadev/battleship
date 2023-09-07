@@ -28,26 +28,33 @@ export default class GameBoard {
         const lon = Math.floor(Math.random() * (this.size - 0));
 
         if (this.board[lat][lon] === null) {
-          const position = Math.floor(Math.random() * (2));
-
-          if (position === 0) {
-            if (ship.length + lat <= this.size
-              && !this.validateVerticalCollisions(ship.length, lat, lon)) {
-              for (let index = 0; index < ship.length; index += 1) {
-                this.board[lat + index][lon] = ship.length;
-              }
-              break;
-            }
-          } else if (ship.length + lon <= this.size
-              && !this.validateHorizontalCollisions(ship.length, lat, lon)) {
-            for (let index = 0; index < ship.length; index += 1) {
-              this.board[lat][lon + index] = ship.length;
-            }
+          if (this.validateRoom(ship, lat, lon)) {
             break;
           }
         }
       }
     });
+  }
+
+  validateRoom(ship, lat, lon) {
+    const position = Math.floor(Math.random() * (2));
+
+    if (position === 0) {
+      if (ship.length + lat <= this.size
+          && !this.validateVerticalCollisions(ship.length, lat, lon)) {
+        for (let index = 0; index < ship.length; index += 1) {
+          this.board[lat + index][lon] = ship;
+        }
+        return true;
+      }
+    } else if (ship.length + lon <= this.size
+              && !this.validateHorizontalCollisions(ship.length, lat, lon)) {
+      for (let index = 0; index < ship.length; index += 1) {
+        this.board[lat][lon + index] = ship;
+      }
+      return true;
+    }
+    return false;
   }
 
   validateVerticalCollisions(shipLength, lat, lon) {

@@ -28,18 +28,18 @@ export default class GameBoard {
         const lon = Math.floor(Math.random() * (this.size - 0));
 
         if (this.board[lat][lon] === null) {
-          // Validate vertical room
-          if (ship.length + lat <= this.size
-            && !this.validateVerticalCollisions(ship.length, lat, lon)) {
-            for (let index = 0; index < ship.length; index += 1) {
-              this.board[lat + index][lon] = ship.length;
-            }
-            break;
-          }
+          const position = Math.floor(Math.random() * (2));
 
-          // Validate horizontal room
-          if (ship.length + lon <= this.size
-            && !this.validateHorizontalCollisions(ship.length, lat, lon)) {
+          if (position === 0) {
+            if (ship.length + lat <= this.size
+              && !this.validateVerticalCollisions(ship.length, lat, lon)) {
+              for (let index = 0; index < ship.length; index += 1) {
+                this.board[lat + index][lon] = ship.length;
+              }
+              break;
+            }
+          } else if (ship.length + lon <= this.size
+              && !this.validateHorizontalCollisions(ship.length, lat, lon)) {
             for (let index = 0; index < ship.length; index += 1) {
               this.board[lat][lon + index] = ship.length;
             }

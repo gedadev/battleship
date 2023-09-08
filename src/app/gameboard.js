@@ -6,6 +6,7 @@ export default class GameBoard {
     this.size = size;
     this.board = this.generateBoard();
     this.totalHits = [];
+    this.ships = {};
   }
 
   generateBoard() {
@@ -30,6 +31,8 @@ export default class GameBoard {
   }
 
   placeShipAtCoordinate(ship, lat, lon, position) {
+    this.ships[ship.name] = ship;
+
     if (this.board[lat][lon] === null) {
       this.validateRoom(ship, lat, lon, position);
     } else {
@@ -38,15 +41,15 @@ export default class GameBoard {
   }
 
   placeShipsRandomly() {
-    const ships = {
-      carrier: new Ship(5),
-      battleship: new Ship(4),
-      submarine: new Ship(3),
-      destroyer: new Ship(3),
-      patrolBoat: new Ship(2),
+    this.ships = {
+      carrier: new Ship('carrier', 5),
+      battleship: new Ship('battleship', 4),
+      submarine: new Ship('submarine', 3),
+      destroyer: new Ship('destroyer', 3),
+      patrolBoat: new Ship('patrolBoat', 2),
     };
 
-    Object.values(ships).forEach((ship) => {
+    Object.values(this.ships).forEach((ship) => {
       // eslint-disable-next-line no-constant-condition
       while (true) {
         // Generate random coordinate in the grid
@@ -158,12 +161,10 @@ export default class GameBoard {
 }
 
 const game = new GameBoard(10);
-const submarine = new Ship(3);
-game.placeShipAtCoordinate(submarine, 0, 0, 1);
-// game.placeShipsRandomly();
-game.receiveAttack(1, 0);
-game.receiveAttack(0, 0);
-game.receiveAttack(0, 1);
-game.receiveAttack(0, 0);
+const submarine = new Ship('submarine', 3);
+const destroyer = new Ship('destroyer', 3);
+// game.placeShipAtCoordinate(submarine, 0, 0, 1);
+// game.placeShipAtCoordinate(destroyer, 5, 5, 1);
+game.placeShipsRandomly();
 console.table(game.board);
-console.log(game.totalHits);
+console.log(game.ships);

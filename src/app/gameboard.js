@@ -11,7 +11,15 @@ export default class GameBoard {
     return new Array(this.size).fill(null).map(() => new Array(this.size).fill(null));
   }
 
-  placeShips() {
+  placeShipAtCoordinate(ship, lat, lon, position) {
+    if (this.board[lat][lon] === null) {
+      this.validateRoom(ship, lat, lon, position);
+    } else {
+      console.log('there is no room, try another coordinate');
+    }
+  }
+
+  placeShipsRandomly() {
     const ships = {
       carrier: new Ship(5),
       battleship: new Ship(4),
@@ -36,8 +44,8 @@ export default class GameBoard {
     });
   }
 
-  validateRoom(ship, lat, lon) {
-    const position = Math.floor(Math.random() * (2));
+  validateRoom(ship, lat, lon, pos = null) {
+    const position = pos === null ? Math.floor(Math.random() * (2)) : pos;
 
     if (position === 0) {
       if (ship.length + lat <= this.size
@@ -132,5 +140,7 @@ export default class GameBoard {
 }
 
 const game = new GameBoard(10);
-game.placeShips();
+const submarine = new Ship(3);
+game.placeShipAtCoordinate(submarine, 0, 0, 1);
+// game.placeShipsRandomly();
 console.table(game.board);

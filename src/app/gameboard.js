@@ -5,10 +5,28 @@ export default class GameBoard {
   constructor(size) {
     this.size = size;
     this.board = this.generateBoard();
+    this.totalHits = [];
   }
 
   generateBoard() {
     return new Array(this.size).fill(null).map(() => new Array(this.size).fill(null));
+  }
+
+  receiveAttack(lat, lon) {
+    for (let index = 0; index < this.totalHits.length; index += 1) {
+      if (this.totalHits[index][0] === lat && this.totalHits[index][1] === lon) {
+        return;
+      }
+    }
+
+    this.totalHits.push([lat, lon]);
+
+    if (this.board[lat][lon] !== null) {
+      this.board[lat][lon].hit();
+      console.log(`you hit a ship at [${lat}, ${lon}] coordinate`);
+    } else {
+      console.log(`hit failed at [${lat}, ${lon}] coordinate`);
+    }
   }
 
   placeShipAtCoordinate(ship, lat, lon, position) {
@@ -143,4 +161,9 @@ const game = new GameBoard(10);
 const submarine = new Ship(3);
 game.placeShipAtCoordinate(submarine, 0, 0, 1);
 // game.placeShipsRandomly();
+game.receiveAttack(1, 0);
+game.receiveAttack(0, 0);
+game.receiveAttack(0, 1);
+game.receiveAttack(0, 0);
 console.table(game.board);
+console.log(game.totalHits);

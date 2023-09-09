@@ -13,6 +13,15 @@ export default class GameBoard {
     return new Array(this.size).fill(null).map(() => new Array(this.size).fill(null));
   }
 
+  allShipsSunk() {
+    return Object.values(this.ships).reduce((sunk, current) => {
+      if (sunk && current.sunk) {
+        return true;
+      }
+      return false;
+    }, true);
+  }
+
   receiveAttack(lat, lon) {
     for (let index = 0; index < this.totalHits.length; index += 1) {
       if (this.totalHits[index][0] === lat && this.totalHits[index][1] === lon) {
@@ -159,12 +168,3 @@ export default class GameBoard {
     return false;
   }
 }
-
-const game = new GameBoard(10);
-const submarine = new Ship('submarine', 3);
-const destroyer = new Ship('destroyer', 3);
-// game.placeShipAtCoordinate(submarine, 0, 0, 1);
-// game.placeShipAtCoordinate(destroyer, 5, 5, 1);
-game.placeShipsRandomly();
-console.table(game.board);
-console.log(game.ships);

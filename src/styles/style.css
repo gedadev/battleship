@@ -1,0 +1,91 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: 0;
+    vertical-align: baseline;
+    list-style: none;
+    text-decoration: none;
+}
+
+body {
+    background-color: #e5e5e5;
+}
+
+h1 {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 4em;
+}
+
+main {
+    margin: auto;
+    display: flex;
+    width: 70%;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+}
+
+.board-container {
+    width: 40%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    margin-top: 100px;
+    justify-items: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.latitude {
+    grid-column: 2 / 3;
+    display: flex;
+    justify-content: space-around;
+    margin: 3px 0;
+}
+
+.longitude {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0 3px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 35px);
+    gap: 1px;
+}
+
+.player {
+    margin: 40px auto;
+    grid-column: 2 / 3;
+}
+
+.pixel {
+    height: 35px;
+    width: 35px;
+    background-color: rgb(148, 228, 212);
+    border: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+.ships-container {
+    padding: 20px 20px;
+}
+
+.ship {
+    display: flex;
+    margin: 10px 0;
+    gap: 1px;
+}
+
+.ship > .pixel {
+    height: 10px;
+    width: 10px;
+}

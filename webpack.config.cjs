@@ -8,6 +8,9 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  resolve: {
+    extensions: ['.js'],
+  },
   devServer: {
     static: './dist',
   },
@@ -24,6 +27,10 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Battleship',
+      template: './src/template.html',
+      inject: 'body',
+    }),
   ],
 };

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/extensions
 import Ship from './ship.js';
 
 export default class GameBoard {

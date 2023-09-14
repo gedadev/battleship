@@ -22,4 +22,17 @@ export default class RenderGameBoard {
       this.grid.push(grid);
     });
   }
+
+  displayShips() {
+    this.grid.forEach((element, index) => {
+      for (let i = 0; i < element.length; i += 1) {
+        for (let j = 0; j < element.length; j += 1) {
+          if (this.player[index].gameBoard.board[i][j] !== null) {
+            // eslint-disable-next-line no-param-reassign
+            element[i][j].style.backgroundColor = 'var(--ship-color)';
+          }
+        }
+      }
+    });
+  }
 }

@@ -35,4 +35,12 @@ export default class RenderGameBoard {
       }
     });
   }
+
+  displayAttack(lat, lon, index) {
+    if (this.player[index].gameBoard.board[lat][lon] !== null) {
+      this.grid[index][lat][lon].classList.add('hit');
+    } else {
+      this.grid[index][lat][lon].classList.add('fail');
+    }
+  }
 }

@@ -75,7 +75,27 @@ main {
     width: 35px;
     border: 1px;
     border-style: solid;
-    border-color: black;
+    border-color: rgb(185, 171, 131);
+}
+
+.hit::after {
+    content: '\2022';
+    position: relative;
+    top: -5px;
+    left: 10px;
+    color: red;
+    font-size: 40px;
+    text-shadow: 0px 0px 10px red;
+}
+
+.fail::after {
+    content: '\2022';
+    position: relative;
+    top: -5px;
+    left: 10px;
+    color: gray;
+    font-size: 40px;
+    text-shadow: 0px 0px 10px gray;
 }
 
 .ships-container {

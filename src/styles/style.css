@@ -10,16 +10,45 @@
 
 :root {
     --ship-color: rgb(206, 232, 210);
+    --font-color: rgb(57, 57, 57);
+    --main-font: 'Mooli', sans-serif;
 }
 
 body {
     background-color: #e5e5e5;
+    font-family: var(--main-font);
+    color: var(--font-color)
 }
 
 h1 {
     text-align: center;
     margin: 30px 0;
-    font-size: 4em;
+    font-size: 75px;
+    font-family: 'Black Ops One', cursive;
+}
+
+#navbar > ul{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 70px;
+    margin: 50px 0 0;   
+}
+
+.nav-item {
+    font-size: 14px;
+    cursor: pointer;
+    transition: text-shadow .5s;
+}
+
+.nav-item:nth-child(2) {
+    font-size: 28px;
+    text-shadow: 0 0 8px rgb(57, 57, 57);
+    font-weight: bolder;
+}
+
+.nav-item:hover {
+    text-shadow: 0 0 10px rgb(173, 173, 173);
 }
 
 main {
@@ -36,7 +65,7 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
-    margin-top: 100px;
+    margin-top: 70px;
     justify-items: center;
 }
 
@@ -81,8 +110,8 @@ main {
 .hit::after {
     content: '\2022';
     position: relative;
-    top: -5px;
-    left: 10px;
+    top: -8px;
+    left: 7px;
     color: red;
     font-size: 40px;
     text-shadow: 0px 0px 10px red;
@@ -91,8 +120,8 @@ main {
 .fail::after {
     content: '\2022';
     position: relative;
-    top: -5px;
-    left: 10px;
+    top: -8px;
+    left: 7px;
     color: gray;
     font-size: 40px;
     text-shadow: 0px 0px 10px gray;

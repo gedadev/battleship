@@ -24,6 +24,7 @@ export default class RenderGameBoard {
   }
 
   displayShips() {
+    this.clearGrid();
     this.grid.forEach((element, index) => {
       for (let i = 0; i < element.length; i += 1) {
         for (let j = 0; j < element.length; j += 1) {
@@ -31,6 +32,17 @@ export default class RenderGameBoard {
             // eslint-disable-next-line no-param-reassign
             element[i][j].style.backgroundColor = 'var(--ship-color)';
           }
+        }
+      }
+    });
+  }
+
+  clearGrid() {
+    this.grid.forEach((element) => {
+      for (let i = 0; i < element.length; i += 1) {
+        for (let j = 0; j < element.length; j += 1) {
+          // eslint-disable-next-line no-param-reassign
+          element[i][j].style.backgroundColor = 'rgba(0, 0, 0, 0)';
         }
       }
     });

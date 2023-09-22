@@ -3,8 +3,8 @@ import RenderGameBoard from './renderGameBoard.js';
 
 export default class GamePlay {
   constructor() {
-    this.player1 = new Player();
-    this.player2 = new Player();
+    this.player1 = new Player('Player 1');
+    this.player2 = new Player('Computer');
     this.grid = document.querySelectorAll('.grid');
     this.render = new RenderGameBoard(this.grid, this.player1, this.player2);
   }
@@ -30,6 +30,14 @@ export default class GamePlay {
     });
   }
 
+  static declareWinner(player, opponent) {
+    if (opponent.gameBoard.allShipsSunk()) {
+      const winner = document.createElement('h2');
+      winner.innerText = `${player.name} wins`;
+      document.body.appendChild(winner);
+    }
+  }
+
   enableOpponentBoard() {
     const startGame = document.querySelector('#start-game');
 
@@ -52,6 +60,8 @@ export default class GamePlay {
               this.player1.turn = false;
               this.player2.turn = true;
               this.render.displayTurn(1);
+
+              GamePlay.declareWinner(this.player1, this.player2);
             }
           }
           await this.computerMove();
@@ -73,6 +83,8 @@ export default class GamePlay {
               this.player1.turn = true;
               this.player2.turn = false;
               this.render.displayTurn(0);
+
+              GamePlay.declareWinner(this.player2, this.player1);
               break;
             }
           }

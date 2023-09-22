@@ -16,6 +16,17 @@ export default class GamePlay {
 
     this.render.generateGrid();
     this.render.displayShips(0);
+    this.rearrange();
     this.enableOpponentBoard();
+  }
+
+  rearrange() {
+    const rearrangeShips = document.querySelector('#rearrange-ships');
+
+    rearrangeShips.addEventListener('click', () => {
+      this.player1.gameBoard.board = this.player1.gameBoard.generateBoard();
+      this.player1.gameBoard.placeShipsRandomly();
+      this.render.displayShips(0);
+    });
   }
 }

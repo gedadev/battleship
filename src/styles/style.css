@@ -92,11 +92,22 @@ main {
     display: grid;
     grid-template-columns: repeat(10, 35px);
     gap: 1px;
+    background-color: #b4b4b4; 
 }
 
 .player {
     margin: 40px auto;
     grid-column: 2 / 3;
+}
+
+.player > h3 {
+    text-align: center;
+}
+
+.player > p {
+    margin: 10px auto;
+    font-size: 15px;
+    text-align: center;
 }
 
 .pixel {

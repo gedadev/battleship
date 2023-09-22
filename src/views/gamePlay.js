@@ -35,6 +35,7 @@ export default class GamePlay {
 
     startGame.addEventListener('click', () => {
       this.render.gridContainer[1].style.backgroundColor = 'rgba(0,0,0,0)';
+      this.render.displayTurn(0);
 
       const opponentBoardNodes = this.render.gridContainer[1].children;
 
@@ -50,6 +51,7 @@ export default class GamePlay {
               this.render.displayAttack(coordinates[0], coordinates[1], 1);
               this.player1.turn = false;
               this.player2.turn = true;
+              this.render.displayTurn(1);
             }
           }
           await this.computerMove();
@@ -68,6 +70,7 @@ export default class GamePlay {
             this.render.displayAttack(lat, lon, 0);
             this.player1.turn = true;
             this.player2.turn = false;
+            this.render.displayTurn(0);
           }
         }
       }, 1000);

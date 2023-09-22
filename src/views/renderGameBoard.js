@@ -5,6 +5,7 @@ export default class RenderGameBoard {
     this.player2 = player2;
     this.players = [this.player1, this.player2];
     this.grid = [];
+    this.turnIndicator = document.querySelectorAll('.player');
   }
 
   generateGrid() {
@@ -52,6 +53,23 @@ export default class RenderGameBoard {
       this.grid[index][lat][lon].classList.add('hit');
     } else {
       this.grid[index][lat][lon].classList.add('fail');
+    }
+  }
+
+  displayTurn(index) {
+    if (index === 0) {
+      const yourTurn = this.turnIndicator[index].firstElementChild;
+      const opponentTurn = this.turnIndicator[index + 1].firstElementChild;
+
+      yourTurn.style.color = '#84d794';
+      opponentTurn.style.color = '#e76262';
+    }
+    if (index === 1) {
+      const yourTurn = this.turnIndicator[index - 1].firstElementChild;
+      const opponentTurn = this.turnIndicator[index].firstElementChild;
+
+      yourTurn.style.color = '#e76262';
+      opponentTurn.style.color = '#84d794';
     }
   }
 }

@@ -30,11 +30,19 @@ export default class GamePlay {
     });
   }
 
-  static declareWinner(player, opponent) {
+  static declareWinner(player, opponent, opponentBoardNodes) {
     if (opponent.gameBoard.allShipsSunk()) {
       const winner = document.createElement('h2');
       winner.innerText = `${player.name} wins`;
       document.body.appendChild(winner);
+      GamePlay.disableOpponentBoard(opponentBoardNodes);
+    }
+  }
+
+  static disableOpponentBoard(element) {
+    for (let index = 0; index < element.length; index += 1) {
+      const clonedElement = element[index].cloneNode(true);
+      element[index].parentNode.replaceChild(clonedElement, element[index]);
     }
   }
 
@@ -61,7 +69,7 @@ export default class GamePlay {
               this.player2.turn = true;
               this.render.displayTurn(1);
 
-              GamePlay.declareWinner(this.player1, this.player2);
+              GamePlay.declareWinner(this.player1, this.player2, opponentBoardNodes);
             }
           }
           await this.computerMove();

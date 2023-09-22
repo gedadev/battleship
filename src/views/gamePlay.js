@@ -29,4 +29,23 @@ export default class GamePlay {
       this.render.displayShips(0);
     });
   }
+
+  enableOpponentBoard() {
+    const startGame = document.querySelector('#start-game');
+
+    startGame.addEventListener('click', () => {
+      this.render.gridContainer[1].style.backgroundColor = 'rgba(0,0,0,0)';
+
+      const opponentBoardNodes = this.render.gridContainer[1].children;
+
+      for (let i = 0; i < opponentBoardNodes.length; i += 1) {
+        opponentBoardNodes[i].addEventListener('click', () => {
+          const coordinates = i.toString().split('').map(Number);
+          if (coordinates.length < 2) {
+            coordinates.unshift(0);
+          }
+        });
+      }
+    });
+  }
 }

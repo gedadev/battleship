@@ -57,4 +57,20 @@ export default class GamePlay {
       }
     });
   }
+
+  computerMove() {
+    return new Promise(() => {
+      setTimeout(() => {
+        const lat = Math.floor(Math.random() * 10);
+        const lon = Math.floor(Math.random() * 10);
+        if (this.player2.turn) {
+          if (this.player1.gameBoard.receiveAttack(lat, lon)) {
+            this.render.displayAttack(lat, lon, 0);
+            this.player1.turn = true;
+            this.player2.turn = false;
+          }
+        }
+      }, 1000);
+    });
+  }
 }

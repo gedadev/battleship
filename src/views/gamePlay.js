@@ -39,11 +39,20 @@ export default class GamePlay {
       const opponentBoardNodes = this.render.gridContainer[1].children;
 
       for (let i = 0; i < opponentBoardNodes.length; i += 1) {
-        opponentBoardNodes[i].addEventListener('click', () => {
+        opponentBoardNodes[i].addEventListener('click', async () => {
           const coordinates = i.toString().split('').map(Number);
           if (coordinates.length < 2) {
             coordinates.unshift(0);
           }
+
+          if (this.player1.turn) {
+            if (this.player2.gameBoard.receiveAttack(coordinates[0], coordinates[1])) {
+              this.render.displayAttack(coordinates[0], coordinates[1], 1);
+              this.player1.turn = false;
+              this.player2.turn = true;
+            }
+          }
+          await this.computerMove();
         });
       }
     });

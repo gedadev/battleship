@@ -24,7 +24,7 @@ export default class GameBoard {
   receiveAttack(lat, lon) {
     for (let index = 0; index < this.totalHits.length; index += 1) {
       if (this.totalHits[index][0] === lat && this.totalHits[index][1] === lon) {
-        return;
+        return false;
       }
     }
 
@@ -32,20 +32,17 @@ export default class GameBoard {
 
     if (this.board[lat][lon] !== null) {
       this.board[lat][lon].hit();
-      console.log(`you hit a ship at [${lat}, ${lon}] coordinate`);
-    } else {
-      console.log(`hit failed at [${lat}, ${lon}] coordinate`);
     }
+    return true;
   }
 
   placeShipAtCoordinate(ship, lat, lon, position) {
     this.ships[ship.name] = ship;
 
-    if (this.board[lat][lon] === null) {
-      this.validateRoom(ship, lat, lon, position);
-    } else {
-      console.log('there is no room, try another coordinate');
+    if (this.board[lat][lon] === null && this.validateRoom(ship, lat, lon, position)) {
+      return true;
     }
+    return false;
   }
 
   placeShipsRandomly() {

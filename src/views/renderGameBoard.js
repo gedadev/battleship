@@ -1,17 +1,19 @@
 export default class RenderGameBoard {
-  constructor(gridContainer, players) {
+  constructor(gridContainer, player1, player2) {
     this.gridContainer = gridContainer;
-    this.player = players;
+    this.player1 = player1;
+    this.player2 = player2;
+    this.players = [this.player1, this.player2];
     this.grid = [];
   }
 
   generateGrid() {
     this.gridContainer.forEach((element, index) => {
-      const grid = new Array(this.player[index].gameBoard.size).fill(null)
-        .map(() => new Array(this.player[index].gameBoard.size).fill(null));
+      const grid = new Array(this.players[index].gameBoard.size).fill(null)
+        .map(() => new Array(this.players[index].gameBoard.size).fill(null));
 
-      for (let i = 0; i < this.player[index].gameBoard.size; i += 1) {
-        for (let j = 0; j < this.player[index].gameBoard.size; j += 1) {
+      for (let i = 0; i < this.players[index].gameBoard.size; i += 1) {
+        for (let j = 0; j < this.players[index].gameBoard.size; j += 1) {
           const pixel = document.createElement('div');
 
           pixel.className = 'pixel';
@@ -21,35 +23,32 @@ export default class RenderGameBoard {
       }
       this.grid.push(grid);
     });
+    this.gridContainer[0].style.backgroundColor = 'rgba(0, 0, 0, 0)';
   }
 
-  displayShips() {
-    this.clearGrid();
-    this.grid.forEach((element, index) => {
-      for (let i = 0; i < element.length; i += 1) {
-        for (let j = 0; j < element.length; j += 1) {
-          if (this.player[index].gameBoard.board[i][j] !== null) {
-            // eslint-disable-next-line no-param-reassign
-            element[i][j].style.backgroundColor = 'var(--ship-color)';
-          }
-        }
-      }
-    });
-  }
-
-  clearGrid() {
-    this.grid.forEach((element) => {
-      for (let i = 0; i < element.length; i += 1) {
-        for (let j = 0; j < element.length; j += 1) {
+  displayShips(index) {
+    this.clearGrid(index);
+    for (let i = 0; i < this.grid[index].length; i += 1) {
+      for (let j = 0; j < this.grid[index].length; j += 1) {
+        if (this.players[index].gameBoard.board[i][j] !== null) {
           // eslint-disable-next-line no-param-reassign
-          element[i][j].style.backgroundColor = 'rgba(0, 0, 0, 0)';
+          this.grid[index][i][j].style.backgroundColor = 'var(--ship-color)';
         }
       }
-    });
+    }
+  }
+
+  clearGrid(index) {
+    for (let i = 0; i < this.grid[index].length; i += 1) {
+      for (let j = 0; j < this.grid[index].length; j += 1) {
+        // eslint-disable-next-line no-param-reassign
+        this.grid[index][i][j].style.backgroundColor = 'rgba(0, 0, 0, 0)';
+      }
+    }
   }
 
   displayAttack(lat, lon, index) {
-    if (this.player[index].gameBoard.board[lat][lon] !== null) {
+    if (this.players[index].gameBoard.board[lat][lon] !== null) {
       this.grid[index][lat][lon].classList.add('hit');
     } else {
       this.grid[index][lat][lon].classList.add('fail');

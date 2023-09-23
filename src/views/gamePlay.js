@@ -35,11 +35,11 @@ export default class GamePlay {
       const winner = document.createElement('h2');
       winner.innerText = `${player.name} wins`;
       document.body.appendChild(winner);
-      GamePlay.disableOpponentBoard(opponentBoardNodes);
+      GamePlay.disableListeners(opponentBoardNodes);
     }
   }
 
-  static disableOpponentBoard(element) {
+  static disableListeners(element) {
     for (let index = 0; index < element.length; index += 1) {
       const clonedElement = element[index].cloneNode(true);
       element[index].parentNode.replaceChild(clonedElement, element[index]);
@@ -50,6 +50,9 @@ export default class GamePlay {
     const startGame = document.querySelector('#start-game');
 
     startGame.addEventListener('click', () => {
+      const header = document.querySelector('#navbar').firstElementChild.children;
+      GamePlay.disableListeners(header);
+
       this.render.gridContainer[1].style.backgroundColor = 'rgba(0,0,0,0)';
       this.render.displayTurn(0);
 

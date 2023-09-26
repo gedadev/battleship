@@ -12,7 +12,6 @@ export default class GamePlay {
   initGame() {
     this.player1.gameBoard.placeShipsRandomly();
     this.player2.gameBoard.placeShipsRandomly();
-    this.player2.turn = false;
 
     this.render.generateGrid();
     this.render.displayShips(0);
@@ -31,7 +30,23 @@ export default class GamePlay {
   }
 
   resetGame() {
+    this.player1.gameBoard.board = this.player1.gameBoard.generateBoard();
+    this.player1.gameBoard.totalHits = [];
+    this.player1.gameBoard.placeShipsRandomly();
+    this.render.displayShips(0);
+    this.render.clearHits(0);
 
+    this.player2.gameBoard.board = this.player1.gameBoard.generateBoard();
+    this.player2.gameBoard.totalHits = [];
+    this.player2.gameBoard.placeShipsRandomly();
+    this.render.clearGrid(1);
+    this.render.clearHits(1);
+    this.render.gridContainer[1].style.backgroundColor = '#b4b4b4';
+
+    this.rearrange();
+    this.enableOpponentBoard();
+    document.body.children[4].remove();
+    document.body.children[3].remove();
   }
 
   declareWinner(player, opponent, opponentBoardNodes) {
@@ -63,6 +78,8 @@ export default class GamePlay {
     startGame.addEventListener('click', () => {
       const header = document.querySelector('#navbar').firstElementChild.children;
       GamePlay.disableListeners(header);
+      this.player1.turn = true;
+      this.player2.turn = false;
 
       this.render.gridContainer[1].style.backgroundColor = 'rgba(0,0,0,0)';
       this.render.displayTurn(0);
@@ -86,7 +103,7 @@ export default class GamePlay {
               if (this.declareWinner(this.player1, this.player2, opponentBoardNodes)) {
                 const opponentGrid = this.render.grid[1];
                 this.render.grid[1] = GamePlay.updateOpponentGrid(opponentBoardNodes, opponentGrid);
-                document.addEventListener('keydown', this.resetGame.bind(this));
+                document.addEventListener('keydown', this.resetGame.bind(this), { once: true });
                 return;
               }
             }
@@ -129,7 +146,7 @@ export default class GamePlay {
               if (this.declareWinner(this.player1, this.player2, opponentBoardNodes)) {
                 const opponentGrid = this.render.grid[1];
                 this.render.grid[1] = GamePlay.updateOpponentGrid(opponentBoardNodes, opponentGrid);
-                document.addEventListener('keydown', this.resetGame.bind(this));
+                document.addEventListener('keydown', this.resetGame.bind(this), { once: true });
                 return;
               }
               break;

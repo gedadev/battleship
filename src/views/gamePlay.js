@@ -81,6 +81,20 @@ export default class GamePlay {
     });
   }
 
+  static updateOpponentGrid(nodes, grid) {
+    let nodeIndex = 0;
+    while (nodeIndex < nodes.length) {
+      for (let i = 0; i < grid.length; i += 1) {
+        for (let j = 0; j < grid.length; j += 1) {
+          // eslint-disable-next-line no-param-reassign
+          grid[i][j] = nodes[nodeIndex];
+          nodeIndex += 1;
+        }
+      }
+    }
+    return grid;
+  }
+
   computerMove() {
     return new Promise(() => {
       setTimeout(() => {

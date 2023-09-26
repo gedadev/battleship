@@ -56,6 +56,15 @@ export default class RenderGameBoard {
     }
   }
 
+  clearHits(index) {
+    for (let i = 0; i < this.grid[index].length; i += 1) {
+      for (let j = 0; j < this.grid[index].length; j += 1) {
+        // eslint-disable-next-line no-param-reassign
+        this.grid[index][i][j].className = 'pixel';
+      }
+    }
+  }
+
   displayTurn(index) {
     if (index === 0) {
       const yourTurn = this.turnIndicator[index].firstElementChild;

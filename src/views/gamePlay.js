@@ -30,13 +30,24 @@ export default class GamePlay {
     });
   }
 
-  static declareWinner(player, opponent, opponentBoardNodes) {
+  resetGame() {
+
+  }
+
+  declareWinner(player, opponent, opponentBoardNodes) {
     if (opponent.gameBoard.allShipsSunk()) {
+      this.render.displayShips(1);
+
       const winner = document.createElement('h2');
+      const continueGame = document.createElement('p');
       winner.innerText = `${player.name} wins`;
+      continueGame.innerText = 'Press any key to continue';
       document.body.appendChild(winner);
+      document.body.appendChild(continueGame);
       GamePlay.disableListeners(opponentBoardNodes);
+      return true;
     }
+    return false;
   }
 
   static disableListeners(element) {
@@ -72,7 +83,12 @@ export default class GamePlay {
               this.player2.turn = true;
               this.render.displayTurn(1);
 
-              GamePlay.declareWinner(this.player1, this.player2, opponentBoardNodes);
+              if (this.declareWinner(this.player1, this.player2, opponentBoardNodes)) {
+                const opponentGrid = this.render.grid[1];
+                this.render.grid[1] = GamePlay.updateOpponentGrid(opponentBoardNodes, opponentGrid);
+                document.addEventListener('keydown', this.resetGame.bind(this));
+                return;
+              }
             }
           }
           await this.computerMove();
@@ -109,7 +125,13 @@ export default class GamePlay {
               this.player2.turn = false;
               this.render.displayTurn(0);
 
-              GamePlay.declareWinner(this.player2, this.player1);
+              const opponentBoardNodes = this.render.gridContainer[1].children;
+              if (this.declareWinner(this.player1, this.player2, opponentBoardNodes)) {
+                const opponentGrid = this.render.grid[1];
+                this.render.grid[1] = GamePlay.updateOpponentGrid(opponentBoardNodes, opponentGrid);
+                document.addEventListener('keydown', this.resetGame.bind(this));
+                return;
+              }
               break;
             }
           }
